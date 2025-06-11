@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Countdown avanzato fino al 30/06/2025</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #0b0c10;
+      color: #00ffe1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2.2rem;
+    }
+
+    #countdown {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    #altCounts {
+      font-size: 1.8rem;
+      line-height: 1.6;
+    }
+
+    #expired {
+      color: red;
+      font-size: 2rem;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Esodo Azienda Anonima - 30/06/2025 - 23:59:59.999</h1>
+
+  <div id="countdown">Caricamento...</div>
+  <div id="altCounts"></div>
+  <div id="expired">Countdown terminato!</div>
+
+  <script>
+    const countdownEl = document.getElementById("countdown");
+    const altCountsEl = document.getElementById("altCounts");
+    const expiredEl = document.getElementById("expired");
+
+    const targetDate = new Date("2025-06-30T23:59:59.999");
+
+    function getWorkingDays(start, end) {
+      let count = 0;
+      const current = new Date(start);
+
+      while (current < end) {
+        const day = current.getDay();
+        if (day !== 0 && day !== 6) count++; // esclude domenica (0) e sabato (6)
+        current.setDate(current.getDate() + 1);
+      }
+
+      return count;
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        countdownEl.style.display = "none";
+        altCountsEl.style.display = "none";
+        expiredEl.style.display = "block";
+        clearInterval(interval);
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+      const seconds = Math.floor((distance / 1000) % 60);
+      const milliseconds = distance % 1000;
+
+      const totalHours = Math.floor(distance / (1000 * 60 * 60));
+      const totalMinutes = Math.floor(distance / (1000 * 60));
+      const totalWeeks = Math.floor(days / 7);
+      const workingDays = getWorkingDays(now, targetDate);
+
+      countdownEl.textContent = `${days}g ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
+
+      altCountsEl.innerHTML = `
+        <div>📅 Giorni lavorativi: <strong>${workingDays}</strong></div>
+        <div>🗓️ Settimane intere: <strong>${totalWeeks}</strong></div>
+        <div>⏰ Ore totali: <strong>${totalHours}</strong></div>
+        <div>🕒 Minuti totali: <strong>${totalMinutes}</strong></div>
+      `;
+    }
+
+    const interval = setInterval(updateCountdown, 50);
+    updateCountdown();
+  </script>
+</body>
+</html>
