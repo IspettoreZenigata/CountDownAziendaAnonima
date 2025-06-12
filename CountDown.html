@@ -16,7 +16,7 @@
             height: 100vh;
             text-align: center;
             padding: 20px;
-            overflow: hidden; /* Added to prevent scrollbars from shadow */
+            overflow: hidden; /* Added to prevent scrollbars from shadow/movement */
         }
 
         h1 {
@@ -30,8 +30,16 @@
                 4px 4px 5px rgba(0, 0, 0, 0.4),
                 5px 5px 6px rgba(0, 0, 0, 0.3),
                 6px 6px 7px rgba(0, 0, 0, 0.2);
+            
             /* Intermittent Colors */
-            animation: intermittentColor 2s infinite alternate; /* 2s duration, repeats, alternates direction */
+            animation: 
+                intermittentColor 2s infinite alternate, /* Colori intermittenti */
+                floatText 3s infinite ease-in-out alternate, /* Leggero movimento verticale */
+                glowingShadow 1.5s infinite alternate; /* Bagliore pulsante */
+            
+            /* Ensure the element can have transform applied */
+            display: inline-block;
+            will-change: transform, color, text-shadow; /* Ottimizzazione performance */
         }
 
         /* Keyframes for the intermittent color animation */
@@ -42,6 +50,21 @@
             75% { color: #00ff00; } /* A vivid green */
             100% { color: #00ffe1; } /* Back to original */
         }
+
+        /* Keyframes for the floating text effect */
+        @keyframes floatText {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); } /* Move up slightly */
+            100% { transform: translateY(0px); }
+        }
+
+        /* Keyframes for the glowing shadow effect */
+        @keyframes glowingShadow {
+            0% { text-shadow: 0 0 5px rgba(0, 255, 225, 0.7); } /* Less intense glow */
+            50% { text-shadow: 0 0 15px rgba(0, 255, 225, 1), 0 0 25px rgba(0, 255, 225, 0.8), 0 0 35px rgba(0, 255, 225, 0.6); } /* More intense glow */
+            100% { text-shadow: 0 0 5px rgba(0, 255, 225, 0.7); }
+        }
+
 
         #countdown {
             display: flex;
