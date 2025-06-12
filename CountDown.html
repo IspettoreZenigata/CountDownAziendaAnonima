@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Countdown Azienda Anonima</title>
+    <title>Countdown Digitale - 30/06/2025</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -74,6 +74,12 @@
                 0 0 15px rgba(255, 255, 255, 0.4);
         }
 
+        .countdown-item {
+            display: flex;
+            flex-direction: column; /* Impila il numero e l'etichetta */
+            align-items: center; /* Centra orizzontalmente il contenuto */
+        }
+
         .digit-box {
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -88,13 +94,22 @@
             transform: perspective(100px) rotateX(2deg); /* Effetto 3D per i box */
         }
 
+        .countdown-label {
+            font-size: 0.8rem; /* Dimensione etichetta */
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.7); /* Colore più tenue per l'etichetta */
+            margin-top: 5px; /* Spazio tra numero ed etichetta */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+            text-transform: uppercase; /* Maiuscolo per le etichette */
+        }
+
         .separator {
             padding: 0 3px;
             font-size: 3.5rem;
             line-height: 1.2;
             color: #ffffff;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            align-self: center;
+            align-self: center; /* Centra i separatori con i box numeri */
         }
 
         #altCounts {
@@ -135,6 +150,10 @@
                 transform: none;
                 box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1);
             }
+            .countdown-label {
+                font-size: 0.7rem; /* Riduci dimensione etichetta su mobile */
+                margin-top: 3px;
+            }
 
             .separator {
                 font-size: 2rem;
@@ -163,6 +182,9 @@
                 padding: 3px 8px;
                 min-width: 38px;
             }
+            .countdown-label {
+                font-size: 0.6rem;
+            }
             .separator {
                 font-size: 1.8rem;
             }
@@ -175,8 +197,8 @@
 </head>
 <body>
 
-    <h1>Esodo Azienda Anonima<br>30/06/2025<br>23:59:59.999</h1>
-    
+    <h1>Esodo Azienda Anonima<br> - 30/06/2025 - 23:59:59</h1>
+
     <div id="countdown">Caricamento...</div>
     <div id="altCounts"></div>
     <div id="expired">Countdown terminato!</div>
@@ -190,8 +212,8 @@
 
         function getWorkingDays(start, end) {
             let count = 0;
-            const tempCurrent = new Date(start.getTime()); 
-            
+            const tempCurrent = new Date(start.getTime());
+
             while (tempCurrent < end) {
                 const day = tempCurrent.getDay();
                 if (day !== 0 && day !== 6) count++;
@@ -200,9 +222,15 @@
             return count;
         }
 
-        function createDigitBlock(value) {
+        // Funzione modificata per includere l'etichetta
+        function createDigitBlockWithLabel(value, label) {
             const padded = String(value).padStart(2, '0');
-            return `<div class="digit-box">${padded}</div>`;
+            return `
+                <div class="countdown-item">
+                    <div class="digit-box">${padded}</div>
+                    <div class="countdown-label">${label}</div>
+                </div>
+            `;
         }
 
         function updateCountdown() {
@@ -229,10 +257,10 @@
             const workingHours = workingDays * 8;
 
             countdownEl.innerHTML = `
-                ${createDigitBlock(days)}<span class="separator">:</span>
-                ${createDigitBlock(hours)}<span class="separator">:</span>
-                ${createDigitBlock(minutes)}<span class="separator">:</span>
-                ${createDigitBlock(seconds)}
+                ${createDigitBlockWithLabel(days, 'GG')}<span class="separator">:</span>
+                ${createDigitBlockWithLabel(hours, 'HH')}<span class="separator">:</span>
+                ${createDigitBlockWithLabel(minutes, 'MM')}<span class="separator">:</span>
+                ${createDigitBlockWithLabel(seconds, 'SS')}
             `;
 
             altCountsEl.innerHTML = `
