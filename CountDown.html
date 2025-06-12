@@ -59,40 +59,41 @@
             100% { text-shadow: 0 0 5px rgba(0, 255, 225, 0.7); }
         }
 
-        ---
-        /* --- Stili per il Countdown (Nuovo Look Digitale più Definito) --- */
+        /* --- Stili per il Countdown (Leggibile, Centrale, Digitale, Media Grandezza) --- */
         #countdown {
             display: flex;
-            gap: 12px; /* Leggermente ridotto lo spazio tra i blocchi */
-            justify-content: center;
-            font-size: 5rem; /* Poco più piccolo da 6rem a 5rem */
-            font-family: 'Press Start 2P', 'Courier New', monospace; 
+            gap: 10px; /* Spazio tra i blocchi per leggibilità */
+            justify-content: center; /* Centra il countdown */
+            font-size: 4rem; /* Dimensione media per i numeri (ridotto da 5rem) */
+            font-family: 'Press Start 2P', 'Courier New', monospace; /* Font digitale */
             margin-bottom: 30px;
-            color: #00ff00; 
-            /* text-shadow più nitido per la definizione */
+            color: #00ff00; /* Colore verde tipico display digitale */
             text-shadow: 
-                0 0 5px rgba(0, 255, 0, 0.7), /* Bagliore più controllato */
-                0 0 10px rgba(0, 255, 0, 0.5); /* Secondo strato di bagliore più diffuso */
+                0 0 4px rgba(0, 255, 0, 0.8), /* Bagliore più leggero e nitido */
+                0 0 8px rgba(0, 255, 0, 0.4); 
         }
 
         .digit-box {
-            background: rgba(0, 0, 0, 0.4); 
-            border: 1px solid rgba(0, 255, 0, 0.3); /* Bordo più sottile per maggiore nitidezza */
+            background: rgba(0, 0, 0, 0.5); /* Sfondo leggermente più scuro */
+            border: 1px solid rgba(0, 255, 0, 0.2); /* Bordo sottile */
             color: inherit; 
-            padding: 8px 18px; /* Padding leggermente ridotto */
-            border-radius: 6px; /* Bordo raggio leggermente inferiore */
-            box-shadow: inset 0 0 8px rgba(0, 255, 0, 0.15); /* Ombra interna meno intensa */
-            min-width: 80px; /* Larghezza minima leggermente ridotta */
+            padding: 8px 15px; /* Padding leggermente ridotto per compattezza */
+            border-radius: 5px; /* Angoli leggermente meno arrotondati */
+            box-shadow: inset 0 0 7px rgba(0, 255, 0, 0.1); /* Ombra interna leggera */
+            min-width: 70px; /* Larghezza minima per accogliere numeri */
             text-align: center;
             position: relative; 
+            /* Aggiungi un leggero effetto 3D per i box stessi */
+            transform: perspective(100px) rotateX(2deg); /* Inclinazione lieve per effetto 3D */
+            box-shadow: 0 5px 10px rgba(0,0,0,0.5), inset 0 0 7px rgba(0, 255, 0, 0.1);
         }
 
         .separator {
-            padding: 0 4px; /* Separatori più stretti */
-            font-size: 4.5rem; /* Separatori più piccoli */
+            padding: 0 3px; /* Separatori più compatti */
+            font-size: 3.5rem; /* Separatori più piccoli e in linea con la dimensione del testo */
             line-height: 1.2; 
             color: #00ff00; 
-            text-shadow: 0 0 8px rgba(0, 255, 0, 0.7); /* Bagliore più nitido per i separatori */
+            text-shadow: 0 0 7px rgba(0, 255, 0, 0.6); /* Bagliore nitido per i separatori */
             align-self: center; 
         }
 
