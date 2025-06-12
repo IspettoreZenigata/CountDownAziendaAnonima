@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Countdown Azienda Anonima</title>
+    <title>Countdown Digitale - 30/06/2025</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -36,6 +36,7 @@
                 glowingShadow 1.5s infinite alternate;
             display: inline-block;
             will-change: transform, color, text-shadow;
+            line-height: 1.2; /* Aggiungi un po' di spaziatura tra le righe se necessario */
         }
 
         /* --- Animazioni per H1 (restano invariate, si applicano anche su mobile) --- */
@@ -111,41 +112,41 @@
         /* --- MEDIA QUERIES per dispositivi mobili (max-width: 600px) --- */
         @media (max-width: 600px) {
             body {
-                padding: 10px; /* Riduci il padding su schermi piccoli */
+                padding: 10px;
             }
 
             h1 {
-                font-size: 2rem; /* Riduci la dimensione dell'h1 su mobile */
+                font-size: 2rem;
                 margin-bottom: 20px;
                 text-shadow:
                     1px 1px 1px rgba(0, 0, 0, 0.7),
-                    2px 2px 2px rgba(0, 0, 0, 0.5); /* Riduci l'intensità del 3D per chiarezza */
+                    2px 2px 2px rgba(0, 0, 0, 0.5);
             }
 
             #countdown {
-                font-size: 2.5rem; /* Riduci la dimensione del countdown */
-                gap: 5px; /* Riduci lo spazio tra i blocchi */
+                font-size: 2.5rem;
+                gap: 5px;
                 margin-bottom: 20px;
             }
 
             .digit-box {
-                padding: 5px 10px; /* Riduci il padding nei box */
-                min-width: 45px; /* Riduci la larghezza minima */
-                transform: none; /* Rimuovi l'effetto 3D di inclinazione per semplicità su mobile */
-                box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1); /* Semplifica l'ombra interna */
+                padding: 5px 10px;
+                min-width: 45px;
+                transform: none;
+                box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1);
             }
 
             .separator {
-                font-size: 2rem; /* Riduci la dimensione dei separatori */
+                font-size: 2rem;
                 padding: 0 2px;
             }
 
             #altCounts {
-                font-size: 1.2rem; /* Riduci la dimensione del testo alternativo */
+                font-size: 1.2rem;
             }
 
             #expired {
-                font-size: 1.5rem; /* Riduci la dimensione del messaggio di scadenza */
+                font-size: 1.5rem;
             }
         }
 
@@ -174,8 +175,8 @@
 </head>
 <body>
 
-    <h1>Esodo Azienda Anonima - 30/06/2025 - 23:59:59</h1>
-
+    <h1>Esodo Azienda Anonima<br> - 30/06/2025 - 23:59:59</h1>
+    
     <div id="countdown">Caricamento...</div>
     <div id="altCounts"></div>
     <div id="expired">Countdown terminato!</div>
@@ -185,18 +186,15 @@
         const altCountsEl = document.getElementById("altCounts");
         const expiredEl = document.getElementById("expired");
 
-        // The target date is June 30, 2025, 23:59:59.999 CEST (Rome time)
         const targetDate = new Date("2025-06-30T23:59:59.999");
 
         function getWorkingDays(start, end) {
             let count = 0;
-            const current = new Date(start);
-            // Clone the date to avoid modifying the original 'start'
             const tempCurrent = new Date(start.getTime()); 
             
             while (tempCurrent < end) {
                 const day = tempCurrent.getDay();
-                if (day !== 0 && day !== 6) count++; // Not Saturday (6) or Sunday (0)
+                if (day !== 0 && day !== 6) count++;
                 tempCurrent.setDate(tempCurrent.getDate() + 1);
             }
             return count;
@@ -227,9 +225,8 @@
             const totalHours = Math.floor(distance / (1000 * 60 * 60));
             const totalMinutes = Math.floor(distance / (1000 * 60));
             const totalWeeks = Math.floor(days / 7);
-            // Pass a clone of 'now' to getWorkingDays to avoid modifying the original 'now' object
             const workingDays = getWorkingDays(new Date(now.getTime()), targetDate);
-            const workingHours = workingDays * 8; // Assuming 8 working hours per day
+            const workingHours = workingDays * 8;
 
             countdownEl.innerHTML = `
                 ${createDigitBlock(days)}<span class="separator">:</span>
