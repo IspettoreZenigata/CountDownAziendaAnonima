@@ -8,8 +8,9 @@
     <style>
         body {
             font-family: sans-serif;
-            background-color: #0b0c10;
-            color: #00ffe1;
+            /* Sfondo grigio fumé traslucido */
+            background-color: rgba(30, 30, 30, 0.9); /* Un grigio molto scuro con 90% di opacità */
+            color: #00ffe1; /* Colore del testo generale, qui non visibile per l'h1 o countdown */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -18,6 +19,8 @@
             text-align: center;
             padding: 20px;
             overflow: hidden;
+            /* Per l'effetto traslucido, si potrebbe immaginare un'immagine sotto */
+            /* Se avessi un'immagine di sfondo: background-image: url('your-background-image.jpg'); background-size: cover; */
         }
 
         h1 {
@@ -59,40 +62,41 @@
             100% { text-shadow: 0 0 5px rgba(0, 255, 225, 0.7); }
         }
 
-        /* --- Stili per il Countdown (Leggibile, Centrale, Digitale, Media Grandezza, Bianco, Font meno stilizzato) --- */
+        /* --- Stili per il Countdown --- */
         #countdown {
             display: flex;
             gap: 10px;
             justify-content: center;
-            font-size: 4rem; /* Dimensione media per i numeri */
-            font-family: 'Roboto Mono', monospace; /* Nuovo font meno stilizzato */
+            font-size: 4rem;
+            font-family: 'Roboto Mono', monospace;
             margin-bottom: 30px;
-            color: #ffffff; /* Colore bianco per i numeri */
+            color: #ffffff;
             text-shadow:
-                0 0 8px rgba(255, 255, 255, 0.7), /* Bagliore bianco più intenso */
+                0 0 8px rgba(255, 255, 255, 0.7),
                 0 0 15px rgba(255, 255, 255, 0.4);
         }
 
         .digit-box {
-            background: rgba(0, 0, 0, 0.6); /* Sfondo leggermente più scuro per contrasto */
-            border: 1px solid rgba(255, 255, 255, 0.2); /* Bordo bianco sottile */
+            /* Sfondo dei box dei numeri, con una leggera trasparenza rispetto al body */
+            background: rgba(0, 0, 0, 0.6); /* Nero trasparente */
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: inherit;
             padding: 8px 15px;
             border-radius: 5px;
-            box-shadow: inset 0 0 7px rgba(255, 255, 255, 0.1), /* Ombra interna con bagliore bianco */
-                        0 5px 10px rgba(0,0,0,0.5); /* Ombra esterna per un leggero effetto 3D */
+            box-shadow: inset 0 0 7px rgba(255, 255, 255, 0.1),
+                        0 5px 10px rgba(0,0,0,0.5);
             min-width: 70px;
             text-align: center;
             position: relative;
-            transform: perspective(100px) rotateX(2deg); /* Inclinazione lieve per effetto 3D */
+            transform: perspective(100px) rotateX(2deg);
         }
 
         .separator {
             padding: 0 3px;
             font-size: 3.5rem;
             line-height: 1.2;
-            color: #ffffff; /* Separatori bianchi */
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Bagliore bianco nitido per i separatori */
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
             align-self: center;
         }
 
