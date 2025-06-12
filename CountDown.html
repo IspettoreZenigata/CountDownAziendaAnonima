@@ -1,139 +1,159 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Countdown Digitale - 30/06/2025</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background-color: #0b0c10;
-      color: #00ffe1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-      padding: 20px;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Countdown Digitale - 30/06/2025</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #0b0c10;
+            color: #00ffe1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden; /* Added to prevent scrollbars from shadow */
+        }
 
-    h1 {
-      margin-bottom: 30px;
-      font-size: 2.2rem;
-    }
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            /* 3D Effect */
+            text-shadow:
+                1px 1px 2px rgba(0, 0, 0, 0.7),
+                2px 2px 3px rgba(0, 0, 0, 0.6),
+                3px 3px 4px rgba(0, 0, 0, 0.5),
+                4px 4px 5px rgba(0, 0, 0, 0.4),
+                5px 5px 6px rgba(0, 0, 0, 0.3),
+                6px 6px 7px rgba(0, 0, 0, 0.2);
+            /* Intermittent Colors */
+            animation: intermittentColor 2s infinite alternate; /* 2s duration, repeats, alternates direction */
+        }
 
-    #countdown {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      font-size: 3rem;
-      font-family: 'Courier New', Courier, monospace;
-      margin-bottom: 30px;
-    }
+        /* Keyframes for the intermittent color animation */
+        @keyframes intermittentColor {
+            0% { color: #00ffe1; } /* Original color */
+            25% { color: #ff00ff; } /* A vibrant pink/magenta */
+            50% { color: #ffff00; } /* A bright yellow */
+            75% { color: #00ff00; } /* A vivid green */
+            100% { color: #00ffe1; } /* Back to original */
+        }
 
-    .digit-box {
-      background: #111;
-      color: #00ffe1;
-      padding: 10px 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #00ffe1;
-      min-width: 40px;
-      text-align: center;
-    }
+        #countdown {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            font-size: 3rem;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 30px;
+        }
 
-    .separator {
-      padding: 0 5px;
-      font-size: 2.5rem;
-      line-height: 1.5;
-      color: #00ffe1;
-    }
+        .digit-box {
+            background: #111;
+            color: #00ffe1;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #00ffe1;
+            min-width: 40px;
+            text-align: center;
+        }
 
-    #altCounts {
-      font-size: 1.8rem;
-      line-height: 1.6;
-    }
+        .separator {
+            padding: 0 5px;
+            font-size: 2.5rem;
+            line-height: 1.5;
+            color: #00ffe1;
+        }
 
-    #expired {
-      color: red;
-      font-size: 2rem;
-      margin-top: 20px;
-      display: none;
-    }
-  </style>
+        #altCounts {
+            font-size: 1.8rem;
+            line-height: 1.6;
+        }
+
+        #expired {
+            color: red;
+            font-size: 2rem;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
 </head>
 <body>
     
-  <h1>Esodo Azienda Anonima - 30/06/2025 - 23:59:59</h1>
-  
-  <div id="countdown">Caricamento...</div>
-  <div id="altCounts"></div>
-  <div id="expired">Countdown terminato!</div>
+    <h1>Esodo Azienda Anonima - 30/06/2025 - 23:59:59</h1>
+    
+    <div id="countdown">Caricamento...</div>
+    <div id="altCounts"></div>
+    <div id="expired">Countdown terminato!</div>
 
-  <script>
-    const countdownEl = document.getElementById("countdown");
-    const altCountsEl = document.getElementById("altCounts");
-    const expiredEl = document.getElementById("expired");
+    <script>
+        const countdownEl = document.getElementById("countdown");
+        const altCountsEl = document.getElementById("altCounts");
+        const expiredEl = document.getElementById("expired");
 
-    const targetDate = new Date("2025-06-30T23:59:59.999");
+        const targetDate = new Date("2025-06-30T23:59:59.999");
 
-    function getWorkingDays(start, end) {
-      let count = 0;
-      const current = new Date(start);
-      while (current < end) {
-        const day = current.getDay();
-        if (day !== 0 && day !== 6) count++;
-        current.setDate(current.getDate() + 1);
-      }
-      return count;
-    }
+        function getWorkingDays(start, end) {
+            let count = 0;
+            const current = new Date(start);
+            while (current < end) {
+                const day = current.getDay();
+                if (day !== 0 && day !== 6) count++;
+                current.setDate(current.getDate() + 1);
+            }
+            return count;
+        }
 
-    function createDigitBlock(value) {
-      const padded = String(value).padStart(2, '0');
-      return `<div class="digit-box">${padded}</div>`;
-    }
+        function createDigitBlock(value) {
+            const padded = String(value).padStart(2, '0');
+            return `<div class="digit-box">${padded}</div>`;
+        }
 
-    function updateCountdown() {
-      const now = new Date();
-      const distance = targetDate - now;
+        function updateCountdown() {
+            const now = new Date();
+            const distance = targetDate - now;
 
-      if (distance <= 0) {
-        countdownEl.style.display = "none";
-        altCountsEl.style.display = "none";
-        expiredEl.style.display = "block";
-        clearInterval(interval);
-        return;
-      }
+            if (distance <= 0) {
+                countdownEl.style.display = "none";
+                altCountsEl.style.display = "none";
+                expiredEl.style.display = "block";
+                clearInterval(interval);
+                return;
+            }
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((distance / (1000 * 60)) % 60);
-      const seconds = Math.floor((distance / 1000) % 60);
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((distance / (1000 * 60)) % 60);
+            const seconds = Math.floor((distance / 1000) % 60);
 
-      const totalHours = Math.floor(distance / (1000 * 60 * 60));
-      const totalMinutes = Math.floor(distance / (1000 * 60));
-      const totalWeeks = Math.floor(days / 7);
-      const workingDays = getWorkingDays(now, targetDate);
-      const workingHours = workingDays * 8;
+            const totalHours = Math.floor(distance / (1000 * 60 * 60));
+            const totalMinutes = Math.floor(distance / (1000 * 60));
+            const totalWeeks = Math.floor(days / 7);
+            const workingDays = getWorkingDays(now, targetDate);
+            const workingHours = workingDays * 8;
 
-      countdownEl.innerHTML = `
-        ${createDigitBlock(days)}<span class="separator">:</span>
-        ${createDigitBlock(hours)}<span class="separator">:</span>
-        ${createDigitBlock(minutes)}<span class="separator">:</span>
-        ${createDigitBlock(seconds)}
-      `;
+            countdownEl.innerHTML = `
+                ${createDigitBlock(days)}<span class="separator">:</span>
+                ${createDigitBlock(hours)}<span class="separator">:</span>
+                ${createDigitBlock(minutes)}<span class="separator">:</span>
+                ${createDigitBlock(seconds)}
+            `;
 
-      altCountsEl.innerHTML = `
-        <div>📅 Giorni lavorativi: <strong>${workingDays}</strong></div>
-        <div>🧑‍💼 Ore lavorative: <strong>${workingHours}</strong></div>
-        <div>🗓️ Settimane intere: <strong>${totalWeeks}</strong></div>
-        <div>⏰ Ore totali: <strong>${totalHours}</strong></div>
-        <div>🕒 Minuti totali: <strong>${totalMinutes}</strong></div>
-      `;
-    }
+            altCountsEl.innerHTML = `
+                <div>📅 Giorni lavorativi: <strong>${workingDays}</strong></div>
+                <div>🧑‍💼 Ore lavorative: <strong>${workingHours}</strong></div>
+                <div>🗓️ Settimane intere: <strong>${totalWeeks}</strong></div>
+                <div>⏰ Ore totali: <strong>${totalHours}</strong></div>
+                <div>🕒 Minuti totali: <strong>${totalMinutes}</strong></div>
+            `;
+        }
 
-    const interval = setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
+        const interval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
 </body>
 </html>
