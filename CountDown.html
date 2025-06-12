@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Countdown Digitale - 30/06/2025</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: sans-serif;
@@ -59,14 +59,13 @@
             100% { text-shadow: 0 0 5px rgba(0, 255, 225, 0.7); }
         }
 
-        ---
-        /* --- Stili per il Countdown (Nuovo Font Bianco) --- */
+        /* --- Stili per il Countdown (Leggibile, Centrale, Digitale, Media Grandezza, Bianco, Font meno stilizzato) --- */
         #countdown {
             display: flex;
             gap: 10px;
             justify-content: center;
-            font-size: 4rem;
-            font-family: 'Orbitron', sans-serif; /* Nuovo font */
+            font-size: 4rem; /* Dimensione media per i numeri */
+            font-family: 'Roboto Mono', monospace; /* Nuovo font meno stilizzato */
             margin-bottom: 30px;
             color: #ffffff; /* Colore bianco per i numeri */
             text-shadow:
@@ -81,11 +80,11 @@
             padding: 8px 15px;
             border-radius: 5px;
             box-shadow: inset 0 0 7px rgba(255, 255, 255, 0.1), /* Ombra interna con bagliore bianco */
-                        0 5px 10px rgba(0,0,0,0.5); /* Ombra esterna */
+                        0 5px 10px rgba(0,0,0,0.5); /* Ombra esterna per un leggero effetto 3D */
             min-width: 70px;
             text-align: center;
             position: relative;
-            transform: perspective(100px) rotateX(2deg);
+            transform: perspective(100px) rotateX(2deg); /* Inclinazione lieve per effetto 3D */
         }
 
         .separator {
@@ -123,8 +122,6 @@
         const altCountsEl = document.getElementById("altCounts");
         const expiredEl = document.getElementById("expired");
 
-        // The target date is June 30, 2025, 23:59:59.999 CEST (Rome time)
-        // Since the current time is 3:46:44 PM CEST on June 12, 2025, the countdown is still active.
         const targetDate = new Date("2025-06-30T23:59:59.999");
 
         function getWorkingDays(start, end) {
@@ -132,7 +129,7 @@
             const current = new Date(start);
             while (current < end) {
                 const day = current.getDay();
-                if (day !== 0 && day !== 6) count++; // Not Saturday (6) or Sunday (0)
+                if (day !== 0 && day !== 6) count++;
                 current.setDate(current.getDate() + 1);
             }
             return count;
@@ -164,7 +161,7 @@
             const totalMinutes = Math.floor(distance / (1000 * 60));
             const totalWeeks = Math.floor(days / 7);
             const workingDays = getWorkingDays(now, targetDate);
-            const workingHours = workingDays * 8; // Assuming 8 working hours per day
+            const workingHours = workingDays * 8;
 
             countdownEl.innerHTML = `
                 ${createDigitBlock(days)}<span class="separator">:</span>
