@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Countdown avanzato fino al 30/06/2025</title>
+  <title>Countdown Digitale - 30/06/2025</title>
   <style>
     body {
       font-family: sans-serif;
@@ -15,6 +15,7 @@
       justify-content: center;
       height: 100vh;
       text-align: center;
+      padding: 20px;
     }
 
     h1 {
@@ -23,9 +24,29 @@
     }
 
     #countdown {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
       font-size: 3rem;
-      font-weight: bold;
+      font-family: 'Courier New', Courier, monospace;
       margin-bottom: 30px;
+    }
+
+    .digit-box {
+      background: #111;
+      color: #00ffe1;
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #00ffe1;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .separator {
+      padding: 0 5px;
+      font-size: 2.5rem;
+      line-height: 1.5;
+      color: #00ffe1;
     }
 
     #altCounts {
@@ -42,7 +63,7 @@
   </style>
 </head>
 <body>
-  <h1>Esodo Azienda Anonima - 30/06/2025 - 23:59:59.999</h1>
+  <h1>Esodo Azienda Anonima - 30/06/2025 - 23:59:59</h1>
 
   <div id="countdown">Caricamento...</div>
   <div id="altCounts"></div>
@@ -58,14 +79,17 @@
     function getWorkingDays(start, end) {
       let count = 0;
       const current = new Date(start);
-
       while (current < end) {
         const day = current.getDay();
-        if (day !== 0 && day !== 6) count++; // esclude domenica (0) e sabato (6)
+        if (day !== 0 && day !== 6) count++;
         current.setDate(current.getDate() + 1);
       }
-
       return count;
+    }
+
+    function createDigitBlock(value) {
+      const padded = String(value).padStart(2, '0');
+      return `<div class="digit-box">${padded}</div>`;
     }
 
     function updateCountdown() {
@@ -84,14 +108,18 @@
       const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((distance / (1000 * 60)) % 60);
       const seconds = Math.floor((distance / 1000) % 60);
-      const milliseconds = distance % 1000;
 
       const totalHours = Math.floor(distance / (1000 * 60 * 60));
       const totalMinutes = Math.floor(distance / (1000 * 60));
       const totalWeeks = Math.floor(days / 7);
       const workingDays = getWorkingDays(now, targetDate);
 
-      countdownEl.textContent = `${days}g ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`;
+      countdownEl.innerHTML = `
+        ${createDigitBlock(days)}<span class="separator">:</span>
+        ${createDigitBlock(hours)}<span class="separator">:</span>
+        ${createDigitBlock(minutes)}<span class="separator">:</span>
+        ${createDigitBlock(seconds)}
+      `;
 
       altCountsEl.innerHTML = `
         <div>📅 Giorni lavorativi: <strong>${workingDays}</strong></div>
@@ -101,7 +129,7 @@
       `;
     }
 
-    const interval = setInterval(updateCountdown, 50);
+    const interval = setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>
 </body>
